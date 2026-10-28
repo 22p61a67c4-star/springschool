@@ -1,7 +1,9 @@
 package com.alpha.springschool.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,8 +41,24 @@ public class AppController {
 	private StudentService ss;
 	
 	@PostMapping("/register")
-	public void register(@RequestBody Student s) {
+	public Student register(@RequestBody Student s) {
 		System.out.println("REG STUDENT");
-		ss.regStudent(s);
+		return ss.regStudent(s);
+	}
+	
+	@GetMapping("/find")
+	public Student findbyid(@RequestParam int id) {
+		return ss.findStudent(id);
+	}
+	
+	@PatchMapping("/updateStudent")
+	public void updateStudent(@RequestParam int id,@RequestParam long newmob) {
+		System.out.println("this is the update api controller");
+		ss.serviceUpdate(id,newmob);
+	}
+	@DeleteMapping("/delete")
+	public void deleteStudent(@RequestParam int id) {
+		System.out.println("id="+id);
+		ss.deleteStudent(id);
 	}
 }

@@ -1,6 +1,7 @@
 package com.alpha.springschool.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alpha.springschool.dto.ResponseStructure;
 import com.alpha.springschool.entity.Student;
 import com.alpha.springschool.service.StudentService;
 
@@ -41,24 +43,24 @@ public class AppController {
 	private StudentService ss;
 	
 	@PostMapping("/register")
-	public Student register(@RequestBody Student s) {
+	public ResponseEntity<ResponseStructure<Student>> register(@RequestBody Student s) {
 		System.out.println("REG STUDENT");
 		return ss.regStudent(s);
 	}
 	
 	@GetMapping("/find")
-	public Student findbyid(@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<Student>> findbyid(@RequestParam int id) {
 		return ss.findStudent(id);
 	}
 	
 	@PatchMapping("/updateStudent")
-	public void updateStudent(@RequestParam int id,@RequestParam long newmob) {
+	public ResponseEntity<ResponseStructure<Student>> updateStudent(@RequestParam int id,@RequestParam long newmob) {
 		System.out.println("this is the update api controller");
-		ss.serviceUpdate(id,newmob);
+		return ss.serviceUpdate(id,newmob);
 	}
 	@DeleteMapping("/delete")
-	public void deleteStudent(@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<Student>> deleteStudent(@RequestParam int id) {
 		System.out.println("id="+id);
-		ss.deleteStudent(id);
+		return ss.deleteStudent(id);
 	}
 }
